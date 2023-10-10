@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>RazorStyle</AssemblyName>
+        <RootNamespace>RazorStyle</RootNamespace>
+        <LangVersion>11</LangVersion>
+        <Authors>wihrl</Authors>
+        <Description>Allows for CSS inside .razor components without duplication</Description>
+        <RepositoryUrl>https://github.com/wihrl/RazorStyle/</RepositoryUrl>
+        <PackageId>wihrl.RazorStyle</PackageId>
+        <Title>wihrl.RazorStyle</Title>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.23" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <None Include="../LICENSE" Pack="true" PackagePath="/" />
+        <None Include="../README.md" Pack="true" PackagePath="/" />
+    </ItemGroup>
+
+</Project>

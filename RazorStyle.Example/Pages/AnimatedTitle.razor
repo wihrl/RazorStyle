@@ -1,0 +1,38 @@
+﻿@page "/animatedtitle"
+
+@code {
+
+    readonly AnimationTrigger _titleAnimation = new("fly-in");
+
+
+    void Trigger()
+    {
+        _titleAnimation.Trigger();
+        StateHasChanged();
+    }
+
+}
+
+<button @onclick="Trigger">Trigger</button>
+
+<h1 class="title" style="@_titleAnimation">Home</h1>
+
+<Style>
+    .title {
+        color: red;
+        font-size: 48px;
+        animation: 1s linear;
+    }
+</Style>
+
+<Style Clone="true">
+    @@keyframes @context("fly-in") {
+        0% {
+            margin-left: -100px;
+        }    
+        
+        100% {
+            margin-left: 0;
+        }
+    }
+</Style>

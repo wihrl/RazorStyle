@@ -1,0 +1,23 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: setup .net
+        uses: actions/setup-dotnet@v3.2.0
+      - uses: actions/checkout@v3
+      - name: pack
+        run: dotnet pack ./RazorStyle/RazorStyle.csproj -c Release -o . -p:PackageVersion=${{ github.ref_name }}
+      - name: publish
+        run: dotnet nuget push *.nupkg --api-key ${{secrets.NUGET_KEY}} -s nuget.org

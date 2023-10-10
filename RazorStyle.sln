@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorStyle", "RazorStyle\RazorStyle.csproj", "{92CD705D-3455-4664-AF94-0BD1D476FC62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorStyle.Example", "RazorStyle.Example\RazorStyle.Example.csproj", "{504E3AA9-E1CE-489E-BFA1-50A7C2E85D0C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{92CD705D-3455-4664-AF94-0BD1D476FC62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92CD705D-3455-4664-AF94-0BD1D476FC62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92CD705D-3455-4664-AF94-0BD1D476FC62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92CD705D-3455-4664-AF94-0BD1D476FC62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{504E3AA9-E1CE-489E-BFA1-50A7C2E85D0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{504E3AA9-E1CE-489E-BFA1-50A7C2E85D0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{504E3AA9-E1CE-489E-BFA1-50A7C2E85D0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{504E3AA9-E1CE-489E-BFA1-50A7C2E85D0C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
