@@ -1,0 +1,40 @@
+﻿@implements IDisposable
+
+@code {
+    private static readonly ReaderWriterLockSlim _lock = new();
+    private static readonly Dictionary<object, RenderFragment> _fragments = new();
+    private static event Action? FragmentAdded;
+
+    protected override void OnInitialized()
+    {
+        FragmentAdded += Invalidate;
+        base.OnInitialized();
+    }
+
+    public void Dispose()
+    {
+        FragmentAdded -= Invalidate;
+    }
+
+    void Invalidate() => InvokeAsync(StateHasChanged);
+
+    internal static void TryAddFragment(object key, RenderFragment fragment)
+    {
+        _lock.EnterWriteLock();
+        if (_fragments.TryAdd(key, fragment))
+            FragmentAdded?.Invoke();
+        _lock.ExitWriteLock();
+    }
+
+}
+
+<style>
+@{
+    _lock.EnterReadLock();
+    foreach (var renderFragment in _fragments.Values)
+    {
+        @renderFragment
+    }
+    _lock.ExitReadLock();
+}
+</style>

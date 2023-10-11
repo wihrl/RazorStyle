@@ -1,0 +1,26 @@
+﻿@code {
+
+    [Parameter]
+    public RenderFragment<Func<string, string>>? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Clone { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (ChildContent is null)
+            return;
+
+        if (!Clone)
+            StyleRoot.TryAddFragment(ChildContent, ChildContent(_ => throw new("Cloning is disabled.")));
+
+        else
+        {
+            var a = ChildContent(s => s);
+            var b = ChildContent(s => s + "-double");
+            var doubledFragment = Delegate.Combine(a, b);
+            StyleRoot.TryAddFragment(ChildContent, (RenderFragment) doubledFragment);
+        }
+    }
+
+}
