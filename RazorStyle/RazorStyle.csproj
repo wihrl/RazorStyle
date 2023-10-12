@@ -12,8 +12,8 @@
         <RepositoryUrl>https://github.com/wihrl/RazorStyle/</RepositoryUrl>
         <PackageId>wihrl.RazorStyle</PackageId>
         <Title>wihrl.RazorStyle</Title>
-        <PackageLicenseFile>../LICENSE</PackageLicenseFile>
-        <PackageReadmeFile>../README.md</PackageReadmeFile>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
