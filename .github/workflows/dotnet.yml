@@ -17,6 +17,6 @@ jobs:
         uses: actions/setup-dotnet@v3.2.0
       - uses: actions/checkout@v3
       - name: pack
-        run: dotnet pack ./RazorStyle/RazorStyle.csproj -c Release -o .
+        run: dotnet pack ./RazorStyle/RazorStyle.csproj -c Release -o . -p:PackageVersion=1.${{github.run_number}}
       - name: publish
-        run: dotnet nuget push *.nupkg --api-key {{secrets.NUGET_KEY}} -s nuget.org
+        run: dotnet nuget push *.nupkg --api-key ${{secrets.NUGET_KEY}} -s nuget.org
