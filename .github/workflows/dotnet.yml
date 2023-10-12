@@ -6,8 +6,6 @@ name: .NET
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build:
@@ -15,9 +13,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Publish NuGet
-        uses: brandedoutcast/publish-nuget@v2.5.5
-        with:
-          PROJECT_FILE_PATH: RazorStyle/RazorStyle.csproj
-          PACKAGE_NAME: wihrl.RazorStyle
-          NUGET_KEY: oy2fzasjpqwi2lvuzowa4h6hxiezjlkezmfzyajjjjavom
+      - name: setup .net
+        uses: actions/setup-dotnet@v3.2.0
+      - name: pack
+        run: dotnet pack RazorStyle/RazorStyle.csproj -c Release -o .
+      - name: publish
+        run: dotnet nuget push *.nupkg --api-key {{secrets.NUGET_KEY}} -s nuget.org
