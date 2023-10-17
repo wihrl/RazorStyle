@@ -6,20 +6,22 @@
     [Parameter]
     public bool Clone { get; set; }
 
+    internal static readonly string CloneSuffix = "-2";
+
     protected override void OnInitialized()
     {
         if (ChildContent is null)
             return;
 
         if (!Clone)
-            StyleRoot.TryAddFragment(ChildContent, ChildContent(_ => throw new("Cloning is disabled.")));
+            CssRoot.TryAddFragment(ChildContent, ChildContent(_ => throw new("Cloning is disabled.")));
 
         else
         {
             var a = ChildContent(s => s);
-            var b = ChildContent(s => s + "-double");
+            var b = ChildContent(s => s + CloneSuffix);
             var doubledFragment = Delegate.Combine(a, b);
-            StyleRoot.TryAddFragment(ChildContent, (RenderFragment) doubledFragment);
+            CssRoot.TryAddFragment(ChildContent, (RenderFragment) doubledFragment);
         }
     }
 
