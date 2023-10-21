@@ -1,6 +1,9 @@
 # RazorStyle
 A library to allow adding CSS locally inside .razor components without duplication.
 
+![Nuget](https://img.shields.io/nuget/v/wihrl.RazorStyle)
+![Nuget](https://img.shields.io/nuget/dt/wihrl.RazorStyle)
+
 ### Why?
 While using `<style> ... </style>` within Blazor components works fine, each instance of the component creates a new style tag.
 This results in unnecessary junk in the DOM as well as potential styling conflicts.
