@@ -1,13 +1,13 @@
 # RazorStyle
 A library to allow adding CSS locally inside .razor components without duplication.
 
-#### Why?
+### Why?
 While using `<style> ... </style>` within Blazor components works fine, each instance of the component creates a new style tag.
 This results in unnecessary junk in the DOM as well as potential styling conflicts.
 
 Using CSS isolation (`.razor.css`) fixes these issues, but having styles in a separate file is annoying.
 
-### Usage:
+### Usage
 1. Add `@using RazorStyle` to your `_Imports.cs`. (This is necessary for CSS editor support)
 
 2. Add the `CssRoot` component to any singleton component, for example `App.razor`. The root component creates a single `<style>` tag to be
@@ -41,9 +41,7 @@ shared between all instances of `<RazorStyle.Style>`.
 
 **BEWARE:** This library does not handle CSS isolation! Make sure to use unique class names / selectors to avoid conflicts.
 
-<br />
-
-#### AnimationTrigger and class duplication
+### AnimationTrigger and class duplication
 `<Style>` blocks can be rendered twice to allow duplicating CSS. This can be useful when trying
 to trigger an animation without relying on JS.
 
