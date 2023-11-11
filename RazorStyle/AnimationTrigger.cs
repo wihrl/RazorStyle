@@ -2,17 +2,21 @@
 
 public class AnimationTrigger
 {
+    private readonly string _a, _b;
+    
     public AnimationTrigger(string animationName)
     {
         AnimationName = animationName;
+        _a = animationName.StartsWith(RazorStyle.Style.TriggerPrefix) ? animationName : RazorStyle.Style.TriggerPrefix + animationName;
+        _b = _a + RazorStyle.Style.TriggerCloneSuffix;
     }
 
     public string AnimationName { get; }
-    public string ActiveName => State ? AnimationName + Style.CloneSuffix : AnimationName;
-    public string CSS => $"animation-name: {ActiveName};";
+    public string ActiveClass => State ? _b : _a;
     public bool State { get; private set; }
 
-    public void Trigger() => State = !State;
+    public string Style => $"animation-name: {ActiveClass};";
 
-    public override string ToString() => CSS;
+    public void Trigger() => State = !State;
+    public override string ToString() => Style;
 }

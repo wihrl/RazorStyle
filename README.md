@@ -1,26 +1,32 @@
 # RazorStyle
+
 A library to allow adding CSS locally inside .razor components without duplication.
 
 ![Nuget](https://img.shields.io/nuget/v/wihrl.RazorStyle)
 ![Nuget](https://img.shields.io/nuget/dt/wihrl.RazorStyle)
 
 ### Why?
-While using `<style> ... </style>` within Blazor components works fine, each instance of the component creates a new style tag.
+
+While using `<style> ... </style>` within Blazor components works fine, each instance of the component creates a new
+style tag.
 This results in unnecessary junk in the DOM as well as potential styling conflicts.
 
-Using CSS isolation (`.razor.css`) fixes these issues, but having styles in a separate file is annoying.
+Using CSS isolation (`.razor.css`) fixes these issues, but having styles in a separate file sucks.
 
 ### Usage
-1. Add `@using RazorStyle` to your `_Imports.cs`. (This is necessary for CSS editor support)
 
-2. Add the `CssRoot` component to any singleton component, for example `App.razor`. The root component creates a single `<style>` tag to be
-shared between all instances of `<RazorStyle.Style>`.
+1. Add `@using RazorStyle` to your `_Imports.cs`. (This is necessary for IDE support)
+
+2. Add the `StyleRoot` component to any singleton component, for example `App.razor`. The root component creates a
+   single `<style>` tag to be
+   shared between all instances of `<RazorStyle.Style>`.
+
 ```csharp
 // App.razor
 
 // ...
 
-<CssRoot />
+<StyleRoot />
     
 <Router AppAssembly="@typeof(App).Assembly">
     // ...
@@ -30,6 +36,7 @@ shared between all instances of `<RazorStyle.Style>`.
 ```
 
 3. Use `<Style>` instead of `<style>` in your components.
+
 ```csharp
 // SomeComponent.razor
 
@@ -42,11 +49,13 @@ shared between all instances of `<RazorStyle.Style>`.
 </Style>
 ````
 
-**BEWARE:** This library does not handle CSS isolation! Make sure to use unique class names / selectors to avoid conflicts.
+**BEWARE:** This library does not handle CSS isolation! Make sure to use
+unique class names / selectors to avoid conflicts between components.
 
-### AnimationTrigger and class duplication
-`<Style>` blocks can be rendered twice to allow duplicating CSS. This can be useful when trying
-to trigger an animation without relying on JS.
+### Triggered animations
+
+Adding a `_triggered_` prefix to `@keyframes` blocks will duplicate it with a different name.
+This can be used in combination with `AnimationTrigger` to replay an animation programatically without relying on JS.
 
 ```csharp
 // SomeAnimatedComponent.razor
@@ -54,7 +63,6 @@ to trigger an animation without relying on JS.
 @code {
 
     readonly AnimationTrigger _titleAnimation = new("fly-in");
-
 
     void Trigger()
     {
@@ -70,16 +78,13 @@ to trigger an animation without relying on JS.
 
 <Style>
     .title {
+        // ! do NOT include the animation name ! 
         animation: 1s linear;
         // ...
     }
-</Style>
 
-<Style Clone="true">
-    @@keyframes @context("fly-in") {
+    @@keyframes _triggered_fly-in {
         // ...
-    }
+    } 
 </Style>
 ````
-Note that *all* contents of a cloneable Style block will be rendered twice, so keep any CSS
-you do not want to duplicate in a separate block.
