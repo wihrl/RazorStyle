@@ -9,6 +9,8 @@ public class StyleRoot : ComponentBase, IDisposable
     private static readonly ReaderWriterLockSlim _lock = new();
     private static readonly Dictionary<object, string> _fragments = new();
     private static event Action? FragmentAdded;
+    
+    public static bool EnableHotReload { get; set; }
 
     protected override void OnInitialized()
     {
@@ -23,34 +25,20 @@ public class StyleRoot : ComponentBase, IDisposable
 
     void Invalidate() => InvokeAsync(StateHasChanged);
 
-    internal static bool LockIfFragmentMissing(object key)
+    internal static void AddIfMissing(object key, Func<string> fragmentFactory)
     {
         _lock.EnterUpgradeableReadLock();
 
-#if DEBUG
-        // assume fragment always missing in debug mode to enable hot reload
-        _lock.EnterWriteLock();
-        return true;
-#endif
-
-        if (!_fragments.ContainsKey(key))
+        if (EnableHotReload || !_fragments.ContainsKey(key))
         {
             _lock.EnterWriteLock();
-            return true;
+            _fragments[key] = fragmentFactory();
+            _lock.ExitWriteLock();
+            
+            FragmentAdded?.Invoke();
         }
 
         _lock.ExitUpgradeableReadLock();
-        return false;
-    }
-
-    internal static void AddFragmentAndUnlock(object key, string fragment)
-    {
-        _fragments[key] = fragment;
-
-        _lock.ExitWriteLock();
-        _lock.ExitUpgradeableReadLock();
-
-        FragmentAdded?.Invoke();
     }
 
     protected override void BuildRenderTree(RenderTreeBuilder builder)

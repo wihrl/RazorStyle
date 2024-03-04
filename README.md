@@ -31,6 +31,18 @@ Using CSS isolation (`.razor.css`) fixes these issues, but having styles in a se
 <Router AppAssembly="@typeof(App).Assembly">
     // ...
 </Router>
+    
+@code {
+protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+#if DEBUG
+        // Enable hot reload for debugging only (performance impact)
+        StyleRoot.EnableHotReload = true;
+#endif
+    }
+}
 
 // ...
 ```

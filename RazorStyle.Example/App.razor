@@ -12,3 +12,16 @@
         </LayoutView>
     </NotFound>
 </Router>
+
+@code {
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+    #if DEBUG
+            StyleRoot.EnableHotReload = true;
+    #endif
+        }
+
+}

@@ -20,8 +20,7 @@ public class Style : ComponentBase
         if (ChildContent is null)
             return;
 
-        if (StyleRoot.LockIfFragmentMissing(ChildContent))
-            StyleRoot.AddFragmentAndUnlock(ChildContent, BuildTriggerAnimations());
+        StyleRoot.AddIfMissing(ChildContent, BuildTriggerAnimations);
     }
 
     string BuildTriggerAnimations()
