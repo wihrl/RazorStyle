@@ -26,7 +26,13 @@ public class StyleRoot : ComponentBase, IDisposable
     internal static bool LockIfFragmentMissing(object key)
     {
         _lock.EnterUpgradeableReadLock();
-        
+
+#if DEBUG
+        // assume fragment always missing in debug mode to enable hot reload
+        _lock.EnterWriteLock();
+        return true;
+#endif
+
         if (!_fragments.ContainsKey(key))
         {
             _lock.EnterWriteLock();
@@ -39,11 +45,11 @@ public class StyleRoot : ComponentBase, IDisposable
 
     internal static void AddFragmentAndUnlock(object key, string fragment)
     {
-        _fragments.Add(key, fragment);
-        
+        _fragments[key] = fragment;
+
         _lock.ExitWriteLock();
         _lock.ExitUpgradeableReadLock();
-        
+
         FragmentAdded?.Invoke();
     }
 
