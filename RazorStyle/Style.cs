@@ -23,6 +23,15 @@ public class Style : ComponentBase
         StyleRoot.AddIfMissing(ChildContent, BuildTriggerAnimations);
     }
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (ChildContent is null)
+            return;
+
+        if (StyleRoot.EnableHotReload)
+            StyleRoot.AddIfMissing(ChildContent, BuildTriggerAnimations);
+    }
+
     string BuildTriggerAnimations()
     {
         var builder = new RenderTreeBuilder();
